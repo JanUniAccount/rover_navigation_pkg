@@ -15,6 +15,18 @@
 <material>Gazebo/Red</material>
 </gazebo>
 
+<gazebo reference="susRight_link">
+<mu1>0.2</mu1>
+<mu2>0.2</mu2>
+<material>Gazebo/Red</material>
+</gazebo>
+
+<gazebo reference="susLeft_link">
+<mu1>0.2</mu1>
+<mu2>0.2</mu2>
+<material>Gazebo/Red</material>
+</gazebo>
+
 <gazebo reference="wheel1_link">
 <mu1>0.2</mu1>
 <mu2>0.2</mu2>
@@ -39,6 +51,18 @@
 <material>Gazebo/Yellow</material>
 </gazebo>
 
+<gazebo reference="wheel5_link">
+<mu1>0.2</mu1>
+<mu2>0.2</mu2>
+<material>Gazebo/Yellow</material>
+</gazebo>
+
+<gazebo reference="wheel6_link">
+<mu1>0.2</mu1>
+<mu2>0.2</mu2>
+<material>Gazebo/Yellow</material>
+</gazebo>
+
 <!-- Controller for the Mars Rover -->
 <gazebo>
 	<plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
@@ -49,6 +73,8 @@
 	    <!-- Robot kinematics -->
 	    <leftFrontJoint>wheel4_joint</leftFrontJoint>
 	    <rightFrontJoint>wheel3_joint</rightFrontJoint>
+		<leftFrontJoint>wheel5_joint</leftFrontJoint>
+	    <rightFrontJoint>wheel6_joint</rightFrontJoint>
 	    <leftRearJoint>wheel2_joint</leftRearJoint>
 	    <rightRearJoint>wheel1_joint</rightRearJoint>
 	    <wheelSeparation>${body_link_y_dim+wheel_link_length}</wheelSeparation>

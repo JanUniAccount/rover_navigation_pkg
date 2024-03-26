@@ -8,14 +8,14 @@
 <robot name="mars_rover" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 <!-- Body dimensions -->
-<xacro:property name="body_link_x_dim" value="1" />
+<xacro:property name="body_link_x_dim" value="1.5" />
 <xacro:property name="body_link_y_dim" value="0.6" />
 <xacro:property name="body_link_z_dim" value="0.3" />
 
 <!-- Wheel dimensions -->
-<xacro:property name="wheel_link_radius" value="0.15" />
-<xacro:property name="wheel_link_length" value="0.1" />
-<xacro:property name="wheel_link_z_location" value="-0.1" />
+<xacro:property name="wheel_link_radius" value="0.123" />
+<xacro:property name="wheel_link_length" value="0.12" />
+<xacro:property name="wheel_link_z_location" value="-0.27399" />
 
 <!-- Material density -->
 <xacro:property name="body_density" value="2710.0" />
@@ -63,15 +63,15 @@
 <link name="body_link">
     <visual>
         <geometry>
-            <box size="${body_link_x_dim} ${body_link_y_dim} ${body_link_z_dim}"/>
+            <mesh filename="package://rover_navigation_pkg/meshes/body_link.stl" scale="0.001 0.001 0.001" />
         </geometry>
-        <origin rpy="0 0 0" xyz="0 0 0" />
+        <origin rpy="0 0 -1.570795" xyz="0 0 0" />
     </visual>
     <collision>
         <geometry>
-            <box size="${body_link_x_dim} ${body_link_y_dim} ${body_link_z_dim}"/>
+            <mesh filename="package://rover_navigation_pkg/meshes/body_link.stl" scale="0.001 0.001 0.001" />
         </geometry>    
-        <origin rpy="0 0 0" xyz="0 0 0" />
+        <origin rpy="0 0 -1.570795" xyz="0 0 0" />
     </collision>
     <inertial>
         <origin rpy="0 0 0" xyz="0 0 0" />
@@ -89,14 +89,93 @@
 <!-- ####################################################### -->
 
 <!-- ####################################################### -->
+<!-- START: SUS RIGHT LINK OF THE ROBOT                      -->
+<!-- ####################################################### -->
+
+<joint name="susRight_joint" type="continuous">
+    <parent link="body_link" />
+    <child link="susRight_link" />
+    <origin xyz="0.258201 -0.256485 -0.04895" rpy="0 0 0"/>
+    <axis xyz="0 1 0" />
+    <limit effort="1000" velocity="1000" />
+    <dynamics damping="1.0" friction="1.0" />
+</joint>
+<link name="susRight_link">
+    <visual>
+        <geometry>
+            <mesh filename="package://rover_navigation_pkg/meshes/susRight_v2.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <origin rpy="0 0 -1.570795" xyz="0 0 0" />
+    </visual>
+    <collision>
+        <geometry>
+            <mesh filename="package://rover_navigation_pkg/meshes/susRight_v2.stl" scale="0.001 0.001 0.001" />
+        </geometry>    
+        <origin rpy="0 0 -1.570795" xyz="0 0 0" />
+    </collision>
+    <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <mass value="${body_mass}"/>
+        <inertia
+        ixx="${(1.0/12.0)*body_mass*(body_link_y_dim*body_link_y_dim+body_link_z_dim*body_link_z_dim)}" ixy="0"
+        ixz="0" iyy="${(1.0/12.0)*body_mass*(body_link_x_dim*body_link_x_dim+body_link_z_dim+body_link_z_dim)}"
+        iyz="0"
+        izz="${(1.0/12.0)*body_mass*(body_link_y_dim*body_link_y_dim+body_link_x_dim*body_link_x_dim)}" />
+    </inertial>
+</link>
+
+<!-- ####################################################### -->
+<!-- END: SUS RIGHT LINK OF THE ROBOT                        -->
+<!-- ####################################################### -->
+
+<!-- ####################################################### -->
+<!-- START: SUS LEFT LINK OF THE ROBOT                       -->
+<!-- ####################################################### -->
+
+<joint name="susLeft_joint" type="continuous">
+    <parent link="body_link" />
+    <child link="susLeft_link" />
+    <origin xyz="0.257499 0.256485 -0.048956" rpy="0 0 0"/>
+    <axis xyz="0 1 0" />
+    <limit effort="1000" velocity="1000" />
+    <dynamics damping="1.0" friction="1.0" />
+</joint>
+<link name="susLeft_link">
+    <visual>
+        <geometry>
+            <mesh filename="package://rover_navigation_pkg/meshes/susLeft_v2.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <origin rpy="0 0 -1.570795" xyz="0 0 0" />
+    </visual>
+    <collision>
+        <geometry>
+            <mesh filename="package://rover_navigation_pkg/meshes/susLeft.stl" scale="0.001 0.001 0.001" />
+        </geometry>    
+        <origin rpy="0 0 -1.570795" xyz="0 0 0" />
+    </collision>
+    <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <mass value="${body_mass}"/>
+        <inertia
+        ixx="${(1.0/12.0)*body_mass*(body_link_y_dim*body_link_y_dim+body_link_z_dim*body_link_z_dim)}" ixy="0"
+        ixz="0" iyy="${(1.0/12.0)*body_mass*(body_link_x_dim*body_link_x_dim+body_link_z_dim+body_link_z_dim)}"
+        iyz="0"
+        izz="${(1.0/12.0)*body_mass*(body_link_y_dim*body_link_y_dim+body_link_x_dim*body_link_x_dim)}" />
+    </inertial>
+</link>
+
+<!-- ####################################################### -->
+<!-- END: SUS LEFT LINK OF THE ROBOT                         -->
+<!-- ####################################################### -->
+
+<!-- ####################################################### -->
 <!-- START: Back right wheel and the joint                   -->
 <!-- ####################################################### -->
 
 <joint name="wheel1_joint" type="continuous">
     <parent link="body_link" />
     <child link="wheel1_link" />
-    <origin xyz="${-body_link_x_dim/2+1.2*wheel_link_radius} ${-body_link_y_dim/2-wheel_link_length/2} 
-    ${wheel_link_z_location}" rpy="0 0 0"/>
+    <origin xyz="-0.253095 ${-0.193103-wheel_link_radius/2} ${wheel_link_z_location}" rpy="0 0 0"/>
     <axis xyz="0 1 0" />
     <limit effort="1000" velocity="1000" />
     <dynamics damping="1.0" friction="1.0" />
@@ -129,8 +208,7 @@
 <joint name="wheel2_joint" type="continuous">
     <parent link="body_link" />
     <child link="wheel2_link" />
-    <origin xyz="${-body_link_x_dim/2+1.2*wheel_link_radius} ${body_link_y_dim/2+wheel_link_length/2} 
-    ${wheel_link_z_location}" rpy="0 0 0"/>
+    <origin xyz="-0.253095 ${0.193103+wheel_link_radius/2} ${wheel_link_z_location}" rpy="0 0 0"/>
     <axis xyz="0 1 0" />
     <limit effort="1000" velocity="1000" />
     <dynamics damping="1.0" friction="1.0" />
@@ -157,20 +235,85 @@
 <!-- ####################################################### -->
 
 <!-- ####################################################### -->
-<!-- START: Front right and the joint                        -->
+<!-- START: Mid right and the joint                          -->
 <!-- ####################################################### -->
 
 <joint name="wheel3_joint" type="continuous">
-    <parent link="body_link" />
+    <parent link="susRight_link" />
     <child link="wheel3_link" />
-    <origin xyz="${body_link_x_dim/2-1.2*wheel_link_radius} ${-body_link_y_dim/2-wheel_link_length/2} 
-    ${wheel_link_z_location}" rpy="0 0 0"/>
+    <origin xyz="-0.171928 ${-0.055403-wheel_link_radius/2} -0.208184" rpy="0 0 0"/>
     <axis xyz="0 1 0" />
     <limit effort="1000" velocity="1000" />
     <dynamics damping="1.0" friction="1.0" />
 </joint>
 
 <link name="wheel3_link">
+    <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="1.570795 0.0 0.0"/>
+        <geometry>
+            <cylinder radius="${wheel_link_radius}" length="${wheel_link_length}"/>
+        </geometry>
+    </visual>
+    <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="1.570795 0.0 0.0"/>
+        <geometry>
+            <cylinder radius="${wheel_link_radius}" length="${wheel_link_length}"/>
+        </geometry>
+    </collision>
+    <xacro:inertia_wheel />
+</link>
+
+<!-- ####################################################### -->
+<!-- END: Mid right wheel and the joint                      -->
+<!-- ####################################################### -->
+
+<!-- ####################################################### -->
+<!-- START: Mid left and the joint                           -->
+<!-- ####################################################### -->
+
+<joint name="wheel4_joint" type="continuous">
+    <parent link="susLeft_link" />
+    <child link="wheel4_link" />
+    <origin xyz="-0.164366 ${0.0554+wheel_link_radius/2} -0.214205" rpy="0 0 0"/>
+    <axis xyz="0 1 0" />
+    <limit effort="1000" velocity="1000" />
+    <dynamics damping="1.0" friction="1.0" />
+</joint>
+
+<link name="wheel4_link">
+    <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="1.570795 0.0 0.0"/>
+        <geometry>
+            <cylinder radius="${wheel_link_radius}" length="${wheel_link_length}"/>
+        </geometry>
+    </visual>
+    <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="1.570795 0.0 0.0"/>
+        <geometry>
+            <cylinder radius="${wheel_link_radius}" length="${wheel_link_length}"/>
+        </geometry>
+    </collision>
+    <xacro:inertia_wheel />
+</link>
+
+<!-- ####################################################### -->
+<!-- END: Mid left wheel and the joint                       -->
+<!-- ####################################################### -->
+
+<!-- ####################################################### -->
+<!-- START: Front right and the joint                        -->
+<!-- ####################################################### -->
+
+<joint name="wheel5_joint" type="continuous">
+    <parent link="susRight_link" />
+    <child link="wheel5_link" />
+    <origin xyz="0.192971 ${0.019497-wheel_link_radius/2} -0.204194" rpy="0 0 0"/>
+    <axis xyz="0 1 0" />
+    <limit effort="1000" velocity="1000" />
+    <dynamics damping="1.0" friction="1.0" />
+</joint>
+
+<link name="wheel5_link">
     <visual>
         <origin xyz="0.0 0.0 0.0" rpy="1.570795 0.0 0.0"/>
         <geometry>
@@ -194,17 +337,16 @@
 <!-- START: Front left and the joint                         -->
 <!-- ####################################################### -->
 
-<joint name="wheel4_joint" type="continuous">
-    <parent link="body_link" />
-    <child link="wheel4_link" />
-    <origin xyz="${body_link_x_dim/2-1.2*wheel_link_radius} ${body_link_y_dim/2+wheel_link_length/2} 
-    ${wheel_link_z_location}" rpy="0 0 0"/>
+<joint name="wheel6_joint" type="continuous">
+    <parent link="susLeft_link" />
+    <child link="wheel6_link" />
+    <origin xyz="0.200157 ${-0.01960+wheel_link_radius/2} -0.197155" rpy="0 0 0"/>
     <axis xyz="0 1 0" />
     <limit effort="1000" velocity="1000" />
     <dynamics damping="1.0" friction="1.0" />
 </joint>
 
-<link name="wheel4_link">
+<link name="wheel6_link">
     <visual>
         <origin xyz="0.0 0.0 0.0" rpy="1.570795 0.0 0.0"/>
         <geometry>
