@@ -6,22 +6,22 @@
 <!-- ######################################################### -->
 
 <launch>
-<include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="paused" value="false" />
-    <arg name="use_sim_time" value="true" />
-    <arg name="gui" value="true" />
-    <arg name="headless" value="false" />
-    <arg name="debug" value="false" />
-</include>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="false" />
+        <arg name="use_sim_time" value="true" />
+        <arg name="gui" value="true" />
+        <arg name="headless" value="false" />
+        <arg name="debug" value="false" />
+    </include>
 
-<!-- Load the robot description -->
+    <!-- Load the robot description -->
     <param name="robot_description" command="$(find xacro)/xacro '$(find rover_navigation_pkg)/urdf/robot.xacro'" />
-<!-- Robot state publisher node -->
+    <!-- Robot state publisher node -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
-<!-- Spawn the model -->
-<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-args="-urdf -model robot_model -param robot_description" />
+    <!-- Spawn the model -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model robot_model -param robot_description" />
 
 </launch>
 
