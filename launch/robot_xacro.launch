@@ -6,7 +6,8 @@
 <!-- ######################################################### -->
 
 <launch>
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <include file="$(find gazebo_ros)/worlds/empty_world.launch">
+        <arg name="world_name" values="$(find rover_navigation_pkg)/worlds/marsyard.world.xacro" />
         <arg name="paused" value="false" />
         <arg name="use_sim_time" value="true" />
         <arg name="gui" value="true" />
